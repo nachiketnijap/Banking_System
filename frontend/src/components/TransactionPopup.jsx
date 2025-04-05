@@ -13,7 +13,7 @@ function TransactionPopup({ type, balance, onClose }) {
         return;
       }
       await axios.post(
-        `http://localhost:5000/api/transactions/${type}`,
+        `https://banking-system-75v4.onrender.com/api/transactions/${type}`,
         { amount },
         { headers: { Authorization: token } }
       );

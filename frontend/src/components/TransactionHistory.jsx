@@ -7,7 +7,7 @@ function TransactionHistory({ userId, onClose }) {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/banker/accounts/${userId}/transactions`, {
+      const res = await axios.get(`https://banking-system-75v4.onrender.com/api/banker/accounts/${userId}/transactions`, {
         headers: { Authorization: token },
       });
       setTransactions(res.data.transactions);

@@ -9,7 +9,7 @@ function Accounts() {
 
   const fetchAccounts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/banker/accounts', {
+      const res = await axios.get('https://banking-system-75v4.onrender.com/api/banker/accounts', {
         headers: { Authorization: token },
       });
       setAccounts(res.data.accounts);

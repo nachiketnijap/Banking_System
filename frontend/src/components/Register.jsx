@@ -12,7 +12,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { username, email, password, role });
+      await axios.post('https://banking-system-75v4.onrender.com/api/auth/register', { username, email, password, role });
       alert('Registration successful, please login.');
       navigate('/login');
     } catch (error) {
