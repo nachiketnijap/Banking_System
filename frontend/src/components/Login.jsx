@@ -5,12 +5,17 @@ import { useNavigate, Link } from 'react-router-dom';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loader
     try {
-      const res = await axios.post('https://banking-system-75v4.onrender.com/api/auth/login', { email, password });
+      const res = await axios.post('https://banking-system-75v4.onrender.com/api/auth/login', {
+        email,
+        password,
+      });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       if (res.data.user.role === 'customer') {
@@ -21,6 +26,8 @@ function Login() {
     } catch (error) {
       console.error(error);
       alert('Login failed');
+    } finally {
+      setLoading(false); // Stop loader
     }
   };
 
@@ -48,11 +55,20 @@ function Login() {
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          Login
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded w-full"
+          disabled={loading}
+        >
+          {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      <p className="mt-2">
+
+      {loading && (
+        <p className="text-center text-blue-600 mt-4 font-medium">Please wait...</p>
+      )}
+
+      <p className="mt-4 text-center">
         Don't have an account?{' '}
         <Link to="/register" className="text-blue-500">
           Register here
