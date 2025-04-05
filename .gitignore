@@ -1,0 +1,8 @@
+# Ignore node_modules in both backend and frontend
+**/node_modules/
+
+# Ignore backend environment file (with sensitive credentials)
+backend/.env
+
+# Ignore the frontend build output directory
+frontend/dist/
