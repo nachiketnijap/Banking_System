@@ -7,17 +7,26 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('customer');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loader
     try {
-      await axios.post('https://banking-system-75v4.onrender.com/api/auth/register', { username, email, password, role });
+      await axios.post('https://banking-system-75v4.onrender.com/api/auth/register', {
+        username,
+        email,
+        password,
+        role,
+      });
       alert('Registration successful, please login.');
       navigate('/login');
     } catch (error) {
       console.error(error);
       alert('Registration failed');
+    } finally {
+      setLoading(false); // Stop loader
     }
   };
 
@@ -57,16 +66,29 @@ function Register() {
         </div>
         <div className="mb-4">
           <label>Role:</label>
-          <select value={role} onChange={(e) => setRole(e.target.value)} className="w-full border p-2">
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="w-full border p-2"
+          >
             <option value="customer">Customer</option>
             <option value="banker">Banker</option>
           </select>
         </div>
-        <button type="submit" className="bg-green-500 text-white p-2 rounded">
-          Register
+        <button
+          type="submit"
+          className="bg-green-500 text-white p-2 rounded w-full"
+          disabled={loading}
+        >
+          {loading ? 'Registering...' : 'Register'}
         </button>
       </form>
-      <p className="mt-2">
+
+      {loading && (
+        <p className="text-center text-green-600 mt-4 font-medium">Please wait...</p>
+      )}
+
+      <p className="mt-4 text-center">
         Already have an account?{' '}
         <Link to="/login" className="text-blue-500">
           Login here
